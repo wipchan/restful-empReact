@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-primary">직원정보 상세</h2>
+		<form action="/emp/empUpdate" name="frm" method="post">
+			<input type="hidden" name="empno" th:value="${emp.empno}">
+			<table class="table table-bordered table-info">		
+				<tr><td><span class="form-control">사번</span></td><td>[[${emp.empno}]]</td></tr>
+				<tr><td><span class="form-control">이름</span></td>
+					<td><input type="text" name="ename" th:value="${emp.ename}" required="required"
+						autofocus="autofocus" class="form-control"></td></tr>
+				<tr><td><span class="form-control">업무</span></td>
+					<td><input type="text" name="job" th:value="${emp.job}" required="required" class="form-control"></td></tr>
+				<tr><td><span class="form-control">관리자 사번</span></td>
+					<td><select name="mgr" class="form-select">
+						<option th:each="e:${empList}" th:value="${e.empno}" 
+							th:selected="${e.empno == emp.mgr}">
+							[[${e.ename}]]([[${e.empno}]])</option></select></td></tr>
+				<tr><td><span class="form-control">입사일</span></td>
+					<td><input type="date" name="hiredate" required="required" class="form-control" th:value="${emp.hiredate}"></td></tr>					
+				<tr><td><span class="form-control">급여</span></td>
+					<td><input type="number" name="sal" required="required"	class="form-control" th:value="${emp.sal}"></td></tr>					
+				<tr><td><span class="form-control">커미션</span></td><td><input type="number" name="comm" required="required"
+					class="form-control" th:value="${emp.comm}"></td></tr>					
+				<tr><td><span class="form-control">부서코드</span></td><td><select name="deptno" class="form-select">
+					<option th:each="dept:${deptList}" th:value="${dept.deptno}"
+						th:selected="${dept.deptno == emp.deptno}">
+							[[${dept.dname}]]([[${dept.deptno}]])</option>
+				</select></td></tr>					
+				<tr><td colspan="2" class="text-center">
+					<input type="submit" name="수정" class="btn btn-warning"></td></tr>
+			</table>
+		</form>
+</div>
+</body>
+</html>

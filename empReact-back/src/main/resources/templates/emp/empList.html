@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-primary">[[${dept.dname}]] 직원 목록</h2>
+	<table class="table table-striped table-bordered table-info">
+		<tr class="table-warning">
+			<td>사번</td><td>이름</td><td>업무</td><td>입사일</td>
+		</tr>
+		<tr th:if="${#lists.size(empList)} == 0">
+			<td colspan="5" class="bg-danger-subtle">사원 정보가 없습니다.</td>
+		</tr>
+		<tr th:if="${#lists.size(empList)} > 0" th:each="emp:${empList}">
+			<td>[[${emp.empno}]]</td>			
+			<td><a th:href="@{/emp/empSelect(empno=${emp.empno})}" class="btn btn-success">[[${emp.ename}]]</a></td>
+			<td>[[${emp.job}]]</td>
+			<td>[[${emp.hiredate}]]</td>
+		</tr>
+	</table>
+	<a class="btn btn-info" href="/dept/deptList">부서목록</a>
+	<a class="btn btn-warning" th:href="@{/emp/empInsertForm(deptno=${dept.deptno})}">직원정보 입력</a>
+	<div id="deptList" class="mt-5"></div>
+</div>
+	<script type="text/javascript">
+		$('#deptList').load('/dept/deptList table');
+	</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		num = parseInt("[[${emp.sal}]]")
+		$('#sal').html(num.toLocaleString('ko-KR'))		
+	}
+	let del = (empno) => {
+		let cf = confirm("정말로 삭제하시겠습니까?")
+		if (cf) location.href="/emp/empDelete?empno="+empnos
+		//if (cf) location.href="/emp/empDelete?empno=[[${emp.empno}]]"
+		else alert("삭제를 취소 하였습니다.")
+	}
+</script>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-primary">직원정보 상세</h2>
+		<table class="table table-bordered table-info">
+			<tr><td><span class="form-control">사번</span></td><td>[[${emp.empno}]]</td></tr>
+			<tr><td><span class="form-control">이름</span></td><td>[[${emp.ename}]]</td></tr>
+			<tr><td><span class="form-control">업무</span></td><td>[[${emp.job}]]</td></tr>
+			<tr><td><span class="form-control">관리자 사번</span></td><td>[[${emp.mgr}]]([[${emp.mgrName}]])</td></tr>
+			<tr><td><span class="form-control">입사일</span></td><td>[[${emp.hiredate}]]</td></tr>					
+			<tr><td><span class="form-control">급여</span></td><td id="sal"></td></tr>					
+			<tr><td><span class="form-control">커미션</span></td><td>[[${emp.comm}]]</td></tr>					
+			<tr><td><span class="form-control">부서코드</span></td><td>[[${emp.deptno }]]([[${emp.dname }]])</td></tr>					
+			<tr><td colspan="4" class="text-center">
+				<a class="btn btn-info" href="/dept/deptList">부서목록</a>
+				<a class="btn btn-success" th:href="@{/emp/empList(deptno=${emp.deptno})}">직원목록</a>
+				<a class="btn btn-warning" th:href="@{/emp/empUpdateForm(empno=${emp.empno})}">수정</a>
+				<a class="btn btn-danger" th:onclick="del([[${emp.empno}]])">삭제</a></td></tr>
+		</table>
+	<div id="empList"></div>
+</div>
+<script type="text/javascript">
+	$('#empList').load('/emp/empList table', 'deptno=[[${emp.deptno}]]')
+</script>
+</body>
+</html>

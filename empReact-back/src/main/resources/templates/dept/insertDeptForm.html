@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function dupChk(){
+		if (!frm.deptno.value){
+			alert("부서코드를 입력하고 체크하세요.")
+			frm.deptno.focus();	return false;
+		}
+		$.post("/dept/dupChk", "deptno="+frm.deptno.value, function(data){
+			$('#dup').html(data);
+		})
+	}
+</script>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-primary">부서 목록</h2>
+	<form action="/dept/insertDept" name="frm" method="post">
+		<table class="table table-bordered table-info">
+			<tr><td>부서코드</td><td><div class="row"><div class="col-auto"><input type="number" name="deptno"
+				required="required" autofocus="autofocus" min="10" max="99" class="form-control"></div>
+				<div class="col-auto"><input type="button" value="중복체크" onclick="dupChk()"
+					class="btn btn-danger btn-sm"><span id="dup" class="err"></span></div></div></td></tr>
+			<tr><td>부서명</td><td><input type="text" name="dname" required="required"
+				 class="form-control"></td></tr>
+			<tr><td>근무지</td><td><input type="text" name="loc" required="required"
+				 class="form-control"></td></tr>
+			<tr><td colspan="2" class="text-center">
+				<input type="submit" value="확인" class="btn btn-success"></td></tr>
+		</table>
+	</form>
+</div>
+</body>
+</html>

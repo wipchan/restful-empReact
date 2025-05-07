@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function Chk(){
+		if (!frm.empno.value){
+			alert("사원코드를 입력하고 체크하세요.")
+			frm.empno.focus();	return false;
+		}
+		$.post("/emp/Chk", "empno="+frm.empno.value, function(msg){
+			$('#chk').html(msg);
+		})
+	}
+</script>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-primary">직원정보 입력</h2>
+	<form action="/emp/empInsert" name="frm" method="post">
+		<table class="table table-bordered table-info">
+			<tr><td>사번</td><td><div class="row"><div class="col-auto"><input type="number" name="empno"
+				required="required" autofocus="autofocus" min="10" max="9999" class="form-control"></div>
+				<div class="col-auto"><input type="button" value="중복체크" onclick="Chk()"
+					class="btn btn-danger btn-sm me-4"><span id="chk" class="err"></span></div></div></td></tr>
+			<tr><td>이름</td><td><input type="text" name="ename" required="required"
+				 class="form-control"></td></tr>
+			<tr><td>업무</td><td><input type="text" name="job" required="required"
+				 class="form-control"></td></tr>
+			<tr><td>관리자 사번</td><td><select name="mgr" class="form-select">
+				<option th:each="emp:${empList}" th:value="${emp.empno}">
+					[[${emp.ename}]]([[${emp.empno}]])</option></select></td></tr>
+			<tr><td>입사일</td><td><input type="date" name="hiredate" required="required"
+				class="form-control"></td></tr>					
+			<tr><td>급여</td><td><input type="number" name="sal" required="required"
+				class="form-control"></td></tr>					
+			<tr><td>커미션</td><td><input type="number" name="comm" required="required"
+				class="form-control"></td></tr>					
+			<tr><td>부서코드</td><td><select name="deptno" class="form-select">
+				<option th:each="dept:${deptList}" th:value="${dept.deptno}"
+					th:selected="${dept.deptno == deptno}">
+						[[${dept.dname}]]([[${dept.deptno}]])</option>
+			</select></td></tr>					
+			<tr><td colspan="2" class="text-center">
+				<input type="submit" value="확인" class="btn btn-success"></td></tr>
+		</table>
+	</form>
+	<a th:href="@{/emp/empList(deptno=${deptno})}" class="btn btn-success">직원 목록</a>
+	<a href="/dept/deptList" class="btn btn-info">부서 목록</a>
+</div>
+</body>
+</html>

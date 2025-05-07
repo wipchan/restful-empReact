@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.empReact.mapper.EmpMapper">
+	<select id="empList" parameterType="integer" resultType="emp">
+		select * from emp where deptno=#{deptno}
+	</select>
+	<select id="list" resultType="emp">
+		select * from emp order by ename
+	</select>
+	<select id="selectChk" parameterType="integer" resultType="emp">
+		select w.*, dname, nvl(m.ename, '사장') mgrName, nvl(w.comm, 0) from emp w, emp m, dept d 
+			where w.empno=#{empno} and w.deptno = d.deptno and w.mgr=m.empno(+)
+	</select>
+	<select id="allEmplist" resultType="emp">
+		select w.*, dname, nvl(m.ename, '사장') mgrName, loc from emp w, emp m, dept d 
+		where w.mgr=m.empno(+) and w.deptno=d.deptno order by w.hiredate
+	</select>
+	<insert id="insert" parameterType="emp">
+		insert into emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) 
+			values (#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno})
+	</insert>
+	<update id="update" parameterType="emp">
+		update emp set ename=#{ename}, job=#{job}, mgr=#{mgr}, hiredate=#{hiredate},
+			sal=#{sal}, comm=#{comm}, deptno=#{deptno} where empno=#{empno}
+	</update>
+	<delete id="delete" parameterType="integer">
+		delete from emp where empno=#{empno}
+	</delete>
+</mapper>

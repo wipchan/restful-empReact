@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<th:block th:if="${result} > 0">
+	<script type="text/javascript">
+		alert("입력 되었습니다.")
+		//location.href="/emp/empList?deptno=[[${deptno}]]"
+		location.href="/emp/empSelect?empno=[[${emp.empno}]]"
+	</script>
+</th:block>
+<div th:if="${result} == 0">
+	<script type="text/javascript">
+		alert("입력 실패했습니다.")
+		history.back()
+	</script>
+</div>
+<span th:if="${result} == -1">
+	<script type="text/javascript">
+		alert("중복된 사번 입니다..")
+		history.back()
+	</script>
+</span>
+</body>
+</html>

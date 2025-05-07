@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{/header.html::header}"></th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container text-center">
+	<h2 class="text-dark">전직원 목록</h2>
+	<table class="table table-bordered table-striped table-info">
+		<tr class="table-warning">
+			<td>사번</td><td>이름</td><td>업무</td><td>입사일</td><td>관리자(이름)</td>
+			<td>급여</td><td>부서명</td><td>근무지</td></tr>
+		<tr th:if="${#lists.size(empList)} == 0">
+			<td colspan="8">데이터가 없습니다.</td>
+		</tr>
+		<tr th:if="${#lists.size(empList)} > 0" th:each="emp:${empList}">
+			<td>[[${emp.empno}]]</td><td>[[${emp.ename}]]</td><td>[[${emp.job}]]</td>
+			<td>[[${emp.hiredate}]]</td><td>[[${emp.mgr}]]([[${emp.mgrName}]])</td>
+			<td>[[${emp.sal}]]</td><td>[[${emp.dname}]]</td><td>[[${emp.loc}]]</td>
+		</tr>
+	</table>
+	<a class="btn btn-info" href="/dept/deptList">부서목록</a>
+</div>
+</body>
+</html>
