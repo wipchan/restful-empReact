@@ -15,13 +15,13 @@ React + Spring Boot 기반의 사원 정보 관리 프로젝트입니다.
 cd empReact-back
 ./mvnw spring-boot:run
 ⚠️ MySQL 등 데이터베이스 설정은 application.properties 파일을 확인해주세요.
-
+```
 ### 프론트엔드 (React)
 ```bash
 cd emp-front
 npm install
 npm start
-
+```
 
 🔹 **Frontend**  
 - React 18+
