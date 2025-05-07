@@ -1,4 +1,4 @@
-# restful-empReact
+# Rest API-empReact
 
 React + Spring Boot 기반의 사원 정보 관리 프로젝트입니다.
 
